@@ -641,3 +641,103 @@ subplot(1,2,2);
 Matplot(W_out*255);
 disp(W_out);
 
+Prac 09-Morphological Operator
+
+atomsLoad("sivp")
+
+I = imread("C:\Users\chett\Downloads\DIP_Prac01_Image.jpg") // Forward
+
+slashes
+
+if sie(1, "c") == 3 ten
+
+1 = rgb2grav
+
+end
+
+// BETTER: Adaptive threshold for uneven lighting
+
+// bw_img = im2bw(1, graythresh(1)) // Otsu automatic (~0.4-0.6)
+
+//OR lower fix threshold
+
+bw in
+
+2
+
+Captures darker soldier
+
+element = "square"; rows = 3; cols = 3;
+
+SE ones(rows, cols); // Simplified for square
+
+dilated imdilate(bw_img, SE);
+
+erode imerode(bw_img, SE);
+
+opened imopen(bw_img, SE);
+
+Order matter
+
+closed imclose(bw_img, SE);
+
+scf(0)
+
+subplot(2,3,1); imshow(1); title("Original")
+
+subplot(2,3,2); imshow(dilated); title("Dilated")
+
+subplot(2,3,3); imshow(erode); title("Eroded")
+
+subplot(2,3,4); imshow(opened); title("Opened")
+
+subplot(2,3,5); imshow(closed); title("Closed")
+
+subplot(2,3,6); imshow(bw_img); title("Binary (0.3)") // ADD THIS!
+
+Robert 
+// Read image
+I = imread("cameraman.tif");
+
+// Convert to double
+I = im2double(I);
+
+// Get size
+[rows, cols] = size(I);
+
+// Initialize output
+Robert = zeros(rows, cols);
+
+// Roberts masks
+Gx = [1 0;
+      0 -1];
+
+Gy = [0 1;
+     -1 0];
+
+// Apply Roberts operator
+for i = 1:rows-1
+    for j = 1:cols-1
+        
+        gx = I(i,j)*Gx(1,1) + I(i,j+1)*Gx(1,2) + ...
+             I(i+1,j)*Gx(2,1) + I(i+1,j+1)*Gx(2,2);
+         
+        gy = I(i,j)*Gy(1,1) + I(i,j+1)*Gy(1,2) + ...
+             I(i+1,j)*Gy(2,1) + I(i+1,j+1)*Gy(2,2);
+         
+        // Gradient magnitude
+        Robert(i,j) = sqrt(gx^2 + gy^2);
+        
+    end
+end
+
+// Display output
+figure
+
+subplot(1,2,1)
+imshow(I)
+title("Original Image")
+
+subplot(1,2,2)
+imshow(uint8(Robert))
+title("Roberts Edge Detection")
